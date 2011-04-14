@@ -15,5 +15,6 @@
 -(UIQuery *)scrollToBottom;
 -(UIQuery *)scrollDown:(int)numberOfRows;
 -(UIQuery *)scrollToTop;
+-(UIQuery *)scrollToSection:(int)section;
 
 @end

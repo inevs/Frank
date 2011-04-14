@@ -40,6 +40,15 @@
 	return [UIQuery withViews:views className:className];
 }
 
+-(UIQuery *)scrollToSection:(NSString*)sec {
+	int section = [sec intValue];
+	UITableView *table = self;
+	if ([table numberOfSections] > section && [table numberOfRowsInSection:section] > 0) {
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:section];
+		[table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+	}
+}
+
 -(NSArray *)rowIndexPathList {
 	UITableView *table = self;
 	NSMutableArray *rowIndexPathList = [NSMutableArray array];
