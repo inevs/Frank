@@ -4,12 +4,26 @@
 
 @implementation UIQueryTableView
 
+-(BOOL) isValidIndexPath:(NSIndexPath*) indexPath forTableView:(UITableView*) _tableView {
+	BOOL result = NO;
+	int numberOfSections = [_tableView numberOfSections];
+	if (indexPath.section < numberOfSections) {
+		int numberOfRowsInSection = [_tableView numberOfRowsInSection:indexPath.section];
+		if (indexPath.row < numberOfRowsInSection) {
+			result = YES;
+		}
+	}
+	return result;
+}
+
 -(UIQuery *)scrollToBottom {
 	UITableView *table = self;
 	int numberOfSections = [table numberOfSections];
 	int numberOfRowsInSection = [table numberOfRowsInSection:numberOfSections-1];
 	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRowsInSection-1 inSection:numberOfSections-1];
-	[table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+	if ([self isValidIndexPath:indexPath forTableView:table]) {
+		[table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+	}
 	return [UIQuery withViews:views className:className];
 }
 
@@ -29,14 +43,18 @@
 		scrollToIndex = rowIndexPathList.count - 1;
 	}
 	NSIndexPath *scrollToIndexPath = [rowIndexPathList objectAtIndex:scrollToIndex];
-	[table scrollToRowAtIndexPath:scrollToIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+	if ([self isValidIndexPath:scrollToIndexPath forTableView:table]) {
+		[table scrollToRowAtIndexPath:scrollToIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+	}
 	return [UIQuery withViews:views className:className];
 }
 
 -(UIQuery*)scrollToTop {
 	UITableView *table = self;
 	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-	[table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+	if ([self isValidIndexPath:indexPath forTableView:table]) {
+		[table scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+	}
 	return [UIQuery withViews:views className:className];
 }
 
