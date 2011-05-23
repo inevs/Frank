@@ -17,7 +17,7 @@
 }
 
 -(UIQuery *)scrollToBottom {
-	UITableView *table = self;
+	UITableView *table = (UITableView *)self;
 	int numberOfSections = [table numberOfSections];
 	int numberOfRowsInSection = [table numberOfRowsInSection:numberOfSections-1];
 	NSIndexPath *indexPath = [NSIndexPath indexPathForRow:numberOfRowsInSection-1 inSection:numberOfSections-1];
@@ -68,7 +68,7 @@
 }
 
 -(NSArray *)rowIndexPathList {
-	UITableView *table = self;
+	UITableView *table = (UITableView *)self;
 	NSMutableArray *rowIndexPathList = [NSMutableArray array];
 	int numberOfSections = [table numberOfSections];
 	for(int i=0; i< numberOfSections; i++) {
